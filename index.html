@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Bochito</title>
+
+	<style type="text/css">
+		.img{
+			width: 500px;
+			height: 500px;
+			object-fit: cover;
+		}
+		.luces{
+			position: absolute;
+			z-index: 10;
+			top: 240px;
+			width: 250px;
+			height: 70px;
+			left: 80px;
+		}
+
+		.focos1{
+			position: absolute;
+			display: flex;
+			width: 60px;
+			height: 60px;
+			border-radius: 100%;
+			background: #FFF6C4;
+			box-shadow: 5px 5px 50px 0 #FFFB91;
+		}
+		.focos2{
+			position: absolute;
+			display: flex;
+			left: 295px;
+			width: 60px;
+			height: 60px;
+			border-radius: 100%;
+			background: #FFF6C4;
+			box-shadow: 5px 5px 50px 0 #FFFB91;
+		}
+		.focos3{
+			position: absolute;
+			top: -43px;
+			left: 24px;
+			display: flex;
+			width: 17px;
+			height: 17px;
+			border-radius: 10px;
+			background: rgba(247, 227, 57,0.7);
+			box-shadow: 0px 0px 10px 5px #F0E703;
+		}
+		.focos4{
+			position: absolute;
+			top: -43px;
+			display: flex;
+			left: 318px;
+			width: 17px;
+			height: 17px;
+			border-radius: 10px;
+			background: rgba(247, 227, 57,0.7);
+			box-shadow: 0px 0px 10px 5px #F0E703;
+		 }
+		.boton{
+			position: relative;
+			left:20px;
+			color: #FFFFFF;
+			width: 150px;
+			height: 75px;
+			border: none;
+			outline: none;
+			background: #F67979;
+			border-radius: 18px;
+			box-shadow: 1px 1px 5px 0 #000000;
+		}
+		.boton:active{
+			color: #F67979;
+			background: #fff;
+			box-shadow: -1px -1px 5px 0 #000000;
+		}
+		.img-control{
+			position: absolute;
+			top: 10px;
+			left: 510px;
+			width: 300px;
+			height: 300px;
+			justify-content: center;
+		}
+		.apagar_alarma{
+			position: absolute;
+			width: 52px;
+			height: 30px;
+			top: 124px;
+			left: 635px;
+			background: none;
+			border: none;
+		}
+		.apagar_alarma:active{
+			box-shadow: 0 0 5px 5px #363636;
+		}
+		.luz_domo{
+			position: absolute;
+			top: -155px;
+			left: 86px;
+			width: 186px;
+			height: 50px;
+			z-index: 15;
+			border-radius: 20px;
+			opacity: 0.9;
+			background: linear-gradient(180deg,rgba(253, 244, 180,0.7),rgba(255, 255, 255,0.5));
+		}
+		.encendido{
+			color: #FFFFFF;
+			font-size: 42px;
+			position: absolute;
+			left: 600px;
+			top: 350px;
+			width: 100px;
+			height: 100px;
+			background: #FD5454;
+			border-radius: 100%;
+			border: none;
+		}
+		.encendido:active{
+			color: #82EF73;
+			background: #FFFFFF;
+			border:3px solid #D3D1D1;
+		}
+		.poner_alarma{
+			position: absolute;
+			width: 52px;
+			height: 30px;
+			top: 70px;
+			left: 635px;
+			background: none;
+			border: none;
+		}
+		.poner_alarma:active{
+			box-shadow: 0 0 5px 5px #363636;
+		}
+
+	</style>
+</head>
+
+
+<body>
+<img class="img" src="https://thumbs.dreamstime.com/b/escarabajo-viejo-de-vw-11816298.jpg">
+
+<div class="luces">
+	<div id="faro1"></div>
+	<div id="faro2"></div>
+
+	<div id="faro3"></div>
+	<div id="faro4"></div>
+
+	<div id="domo"></div>
+</div>
+
+<audio id="audio"></audio>
+
+<div class="botones">
+<button class="boton" onclick="prender()">Encender luces</button>
+<button class="boton" onclick="apagar()">Apagar luces</button>
+<button id="puerta" class="boton" onclick="alarma()">Abrir la Puerta</button>
+</div>
+<button class="encendido" onclick="arrancar()">Start</button>
+
+<img class="img-control" src="https://img.freepik.com/foto-gratis/control-remoto-alarma-coche-sobre-fondo-blanco-representacion-3d_476612-11784.jpg">
+
+<button class="apagar_alarma" onclick="apagar_alarma()"></button>
+<button class="poner_alarma" onclick="poner_alarma()"></button>
+
+
+<script type="text/javascript">
+
+//delaracion de variables//
+
+var audio = new Audio('alarma.mp3');
+var contador = 0;
+var active = 0;
+var identificador = 1;
+
+
+//funciones//
+function poner_alarma() {
+
+      		audio = new Audio('quitar_alarma.mp3');
+			audio.play();
+            contador = 0;
+            active = 0;
+            identificador = 1;
+}
+
+	function apagar_alarma() {
+      if(active == 1){
+      	location.reload();
+		}else{
+			audio = new Audio('quitar_alarma.mp3');
+			audio.play();
+			active = 2;
+		}
+	}
+
+	function prender() {
+		faro1 = document.getElementById('faro1');
+		faro2 = document.getElementById('faro2');
+
+		faro1.classList.add('focos1');
+		faro2.classList.add('focos2');
+	}
+
+
+
+	function apagar() {
+		faro1 = document.getElementById('faro1');
+		faro2 = document.getElementById('faro2');
+
+		faro1.classList.remove('focos1');
+		faro2.classList.remove('focos2');
+	}
+
+
+			
+	function Activar_alarma() {
+		faro3 = document.getElementById('faro3');
+		faro4 = document.getElementById('faro4');
+
+		if(contador >= 0){
+			if (contador %2 == 0){
+				prender();
+		faro3.classList.remove('focos3');
+		faro4.classList.remove('focos4');
+				contador++;
+			}else{
+		faro3.classList.add('focos3');
+		faro4.classList.add('focos4');
+				apagar();
+				contador++
+			}
+		}
+	}
+
+	function interval() {
+		if(active == 0){
+		interval = window.setInterval(Activar_alarma,400);
+		}
+	}
+
+		
+	function alarma(){
+		if(active == 0){
+		audio = new Audio('alarma.mp3')
+		audio.loop = 2;
+		audio.play();
+		interval();
+	    active = 1;
+	  }
+	  else{
+	  	abrircarro();
+	  }
+	}
+
+	function abrircarro() {
+
+		if (identificador == 1) {
+
+		if(active == 2){
+		domo = document.getElementById('domo');
+		domo.classList.add('luz_domo');
+		audio = new Audio('abrir.mp3');
+		audio.play();
+		active = 3;
+		identificador = 2;
+	   }
+	  }else{
+	  	domo.classList.remove('luz_domo');
+		audio = new Audio('abrir.mp3');
+		audio.play();
+		faro1.classList.remove('focos1');
+		faro2.classList.remove('focos2');
+		active = 2;
+		identificador = 1;
+	  }
+	}
+	function arrancar() {
+		if(active == 3 && identificador == 2){
+		audio = new Audio('arrancar.mp3');
+		audio.play();
+		faro1.classList.add('focos1');
+		faro2.classList.add('focos2');
+		domo.classList.remove('luz_domo');
+	  }else{
+
+	  }
+	}
+
+
+</script>
+</body>
+
+
+</html>
